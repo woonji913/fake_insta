@@ -10,6 +10,11 @@
     <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {% bootstrap_form post_form %}
+        
+        {% if image_form %}
+            {% bootstrap_form image_form  show_label=False%}
+        {% endif %}
+        
         {% buttons %}
         <div class="d-flex justify-content-end">
             <button type="submit" class="btn btn-primary" value="Submit">Submit</button>

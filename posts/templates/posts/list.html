@@ -5,8 +5,11 @@
 <a href="{% url 'posts:create' %}">[글 작성하기]</a>
 <hr>
 
-{% for post in posts %}
-    {% include 'posts/_post.html' %}
-{% endfor %}
+
+<div class="d-inline-flex flex-wrap justify-content-center">
+    {% for post in posts %}
+        {% include 'posts/_post.html' %}
+    {% endfor %}
+</div>
 
 {% endblock %}
