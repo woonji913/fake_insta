@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+    <p>{{ post.pk}}</p>
+    <h1>{{ post.content }}</h1>
+    
+    <a href="{% url 'posts:list' %}">[BACK]</a>
+{% endblock %}

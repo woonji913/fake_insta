@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+    {% if request.resolver_match.url_name == 'create' %}
+        <h1>New</h1>
+    {% else %}
+        <h1>Edit</h1>
+    {% endif %}
+    
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% bootstrap_form post_form %}
+        {% buttons %}
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary" value="Submit">Submit</button>
+            <button type="reset" class="btn btn-outline-primary" value="Submit">Cancel</button>
+            <a href="{% url 'posts:list' %}" class="btn btn-info">BACK</a>
+        </div>
+        {% endbuttons %}
+    </form>
+
+{% endblock %}
