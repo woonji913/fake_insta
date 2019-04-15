@@ -1,11 +1,12 @@
 from django.db import models
+from django.conf import settings
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 
 # Create your models here.
 class Post(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.TextField()
-    # image = models.ImageField(blank=True)
     
     def __ste__(self):
         return self.content
