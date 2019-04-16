@@ -6,9 +6,12 @@ from imagekit.processors import ResizeToFill
 # Create your models here.
 class Post(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    # settings.AUTH_USER_MODEL 가 User
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_posts', blank=True)
+    # blank=True 처음엔 빈값으로
     content = models.TextField()
     
-    def __ste__(self):
+    def __str__(self):
         return self.content
         
 class Image(models.Model):

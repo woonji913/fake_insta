@@ -1,4 +1,5 @@
-<div class="col-4 my-3">
+{% load static %}
+<div class="col-12 my-3">
   <div class="card">
     
     <!--작성자 표시-->
@@ -35,6 +36,20 @@
     <img src="#" alt="No image"> 
     {% endif %}
     
+    <!--좋아요-->
+    <div class="d-flex justify-content-end mt-2">
+      <a class="card-link" href="{% url 'posts:like' post.pk %}">
+      	{% if user in post.like_users.all %}
+      	<!--<i class="fas fa-heart fa-lg" style="color:crimson"></i>-->
+      	<img src="{% static "posts/love (4).png" %}">
+      	{% else %}
+      	<!--<i class="far fa-heart style="color:black"></i>-->
+      	<img src="{% static "posts/love (5).png" %}">
+      	{% endif %}
+      </a> 
+      <p class="card-text mx-2">{{ post.like_users.count }}명이 좋아합니다.</p>
+    </div>
+    
     <!--글 내용 보이기-->
     <div class="card-body">
       <p class="card-text">{{ post.content }}</p>
@@ -51,7 +66,7 @@
       </div>
       
     </div>
-    
+    <hr>
     <!--코멘트 보이기-->
     <div class="mx-3 my-3">
       {% for comment in post.comment_set.all %}
