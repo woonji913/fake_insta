@@ -1,13 +1,24 @@
 from django.shortcuts import render, redirect, get_list_or_404, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
+from django.db.models import Q
+from itertools import chain
 from .models import Post, Image, Comment
 from .forms import PostForm, ImageForm, CommentForm
 
 # Create your views here.
 def list(request):  # index임
-    posts = get_list_or_404(Post.objects.order_by('-pk'))
-    # form = PostForm()
+    # 1
+    followings = request.user.followings.all()
+    posts = Post.objects.filter(Q(user__in=followings) | Q(user=request.user.id)).order_by('-pk') #(3)
+    # posts = get_list_or_404(Post.objects.order_by('-pk')) #(1)
+    # posts = Post.objects.filter(user__in=request.user.followings.all()).order_by('-pk') #(2) 내가 팔로하는 사람의 글만 보이기
+    
+    # 2 위와 동일한 , 파이써닉하게
+    # followings = request.user.followings.all()
+    # chain_followings = chain(followings, [request.user])
+    # posts = Post.objects.filter(user__in=chain_followings).order_by('-pk')
+    
     comment_form = CommentForm()
     context = {
         'posts':posts,
@@ -121,4 +132,14 @@ def like(request, post_pk):
     # else:
     #     post.like_users.add(request.user)
     # return redirect('posts:list')
-        
+
+@login_required
+def explore(request):
+    posts = Post.objects.order_by('-pk')
+    # posts = Post.objects.exclude(user=request.user) # 내 글 제외한 것만 가져오기.
+    comment_form = CommentForm()
+    context = {
+        'posts': posts,
+        'comment_form': comment_form,
+    }
+    return render(request, 'posts/explore.html', context)
