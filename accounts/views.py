@@ -46,19 +46,25 @@ def logout(request):
     auth_logout(request)
     return redirect('posts:list')
 
+def people(request, username):
+    people = get_object_or_404(get_user_model(), username=username)
+    context = {'people': people,}
+    return render(request, 'accounts/people.html', context)
+
 @login_required
-def edit(request):
+def update(request):
     if request.method == 'POST':
+        # pass
         form = UserCustomChangeForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('posts:list')
+            return redirect('people', request.user.username)
     else:
         form = UserCustomChangeForm(instance=request.user)
     context = {
         'form': form,
     }
-    return render(request, 'accounts/form.html', context)
+    return render(request, 'accounts/update.html', context)
 
 @require_POST
 @login_required
@@ -68,7 +74,7 @@ def delete(request):
     return redirect('posts:list')
 
 @login_required
-def password_change(request):
+def password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
@@ -80,9 +86,4 @@ def password_change(request):
     context = {
         'form': form,
     }
-    return render(request, 'accounts/form.html', context)
-
-def people(request, username):
-    people = get_object_or_404(get_user_model(), username=username)
-    context = {'people': people,}
-    return render(request, 'accounts/people.html', context)
+    return render(request, 'accounts/password.html', context)

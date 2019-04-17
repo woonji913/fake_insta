@@ -1,12 +1,8 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% block content %}
+<h1>회원정보 수정</h1>
 
-{% if request.resolver_match.url_name == 'signup' %}
-    <h1>Sign Up</h1>
-{% else %}
-    <h1>Password Change</h1>
-{% endif %}
 
 <form action="" method="POST">
     {% csrf_token %}
@@ -16,6 +12,12 @@
         <div class="d-flex justify-content-end">
             <button type="submit" class="btn btn-primary" value="Submit">Submit</button>
             <a href="{% url 'posts:list' %}" class="btn btn-info">BACK</a>
+        </div>
+        <div class="d-flex justify-content-end mt-5">
+            <form class="dropdown-item" action="{% url 'accounts:delete' %}" method="POST" style="display: inline" onsubmit="return confirm('R U SURE??');">
+                {% csrf_token %}
+                <input type="submit" class="btn btn-danger" value="회원탈퇴" />
+            </form>
         </div>
     {% endbuttons %}
 </form>

@@ -1,6 +1,30 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1 class="text-center">{{ people.username }}'s Profile</h1>
+
+{% if people == user %}
+<div class="text-center">
+    <a class="badge badge-info" href="{% url 'accounts:update' %}">회원정보수정</a>
+    <a class="badge badge-warning" href="{% url 'accounts:password' %}">비밀번호 변경</a>
+</div>
+{% endif %}
+
+<!--설정 드롭다운-->
+    <!--<div class="btn-group">-->
+    <!--  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+    <!--    설정-->
+    <!--  </button>-->
+    <!--  <div class="dropdown-menu">-->
+    <!--    <a class="dropdown-item" href="{# url 'accounts:update' #}">[회원정보수정]</a>-->
+    <!--    <a class="dropdown-item" href="{# url 'accounts:password' #}">[비밀번호 변경]</a>-->
+    <!--    <div class="dropdown-divider"></div>-->
+    <!--    <form class="dropdown-item" action="{# url 'accounts:delete' #}" method="POST" style="display: inline" onsubmit="return confirm('R U SURE??');">-->
+    <!--        {# csrf_token #}-->
+    <!--        <input type="submit" class="btn btn-danger" value="회원탈퇴" />-->
+    <!--    </form>-->
+    <!--  </div>-->
+    <!--</div>-->
+
 <br>
 
 <h3 class="text-center">{{ people.username }}님이 작성한 게시글</h3>
@@ -20,7 +44,7 @@
     {% endfor %}
 </div>
 <hr>
-
+<br>
 <h3 class="text-center">{{ people }}님이 작성한 댓글</h3>
 <div class="row">
     {% for comment in people.comment_set.all|dictsortreversed:"pk" %}
