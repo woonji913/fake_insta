@@ -1,15 +1,17 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% block content %}
-<h1>비밀번호 변경</h1>
+
+<h1>프로필 수정</h1>
+
 
 <form action="" method="POST">
     {% csrf_token %}
-    {% bootstrap_form form %}
+    {% bootstrap_form profile_form %}
     
     {% buttons %}
         <div class="d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary" value="Submit">Submit</button>
+            <button type="submit" class="btn btn-primary" value="Submit">수정</button>
             <a href="{% url 'people' user.username %}" class="btn btn-info">BACK</a>
         </div>
     {% endbuttons %}

@@ -7,13 +7,18 @@ from django.contrib.auth import get_user_model
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from .forms import *
+from .models import Profile
 
 # Create your views here.
 def signup(request):
+    if request.user.is_authenticated:
+        return redirect('posts:list')
+    
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
+            Profile.objects.create(user=user)
             auth_login(request, user)
             return redirect('posts:list')
     else:
@@ -87,3 +92,15 @@ def password(request):
         'form': form,
     }
     return render(request, 'accounts/password.html', context)
+
+@login_required
+def profile_update(request):
+    if request.method == "POST":
+        profile_form = ProfileForm(request.POST, instance=request.user.profile)
+        if profile_form.is_valid():
+            profile_form.save()
+            return redirect('people', request.user.username)
+    else:
+        profile_form = ProfileForm(instance=request.user.profile)
+    context = { 'profile_form': profile_form,}
+    return render(request, 'accounts/profile_update.html', context)
