@@ -7,6 +7,7 @@ from .models import Post, Image, Comment
 from .forms import PostForm, ImageForm, CommentForm
 
 # Create your views here.
+@login_required
 def list(request):  # index임
     # 1
     followings = request.user.followings.all()
