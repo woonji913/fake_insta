@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
+{% load socialaccount %}
 {% block content %}
 <h1>Log In</h1>
 
@@ -12,10 +13,12 @@
             <button type="submit" class="btn btn-primary" value="Submit">Submit</button>
             <a href="{% url 'posts:list' %}" class="btn btn-info">BACK</a>
             <br>
-            <a href="{% url 'accounts:signup' %}" class="btn btn-warning">회원가입하기</a>
+            <a href="{% url 'accounts:signup' %}" class="btn btn-success">회원가입하기</a>
             <!--<input type="hidden" value="{{ next }}" name="next"/>-->
         </div>
     {% endbuttons %}
 </form>
+
+<a href="{% provider_login_url 'kakao' method='oauth2' %}" class="btn btn-warning">카카오로그인</a>
 
 {% endblock %}

@@ -13,13 +13,15 @@
             <button type="submit" class="btn btn-primary" value="Submit">Submit</button>
             <a href="{% url 'people' user.username %}" class="btn btn-info">BACK</a>
         </div>
-        <div class="d-flex justify-content-end mt-5">
-            <form class="dropdown-item" action="{% url 'accounts:delete' %}" method="POST" style="display: inline" onsubmit="return confirm('R U SURE??');">
-                {% csrf_token %}
-                <input type="submit" class="btn btn-danger" value="회원탈퇴" />
-            </form>
-        </div>
+        
+            
+        
     {% endbuttons %}
 </form>
-
+<div class="d-flex justify-content-end mt-5">
+    <form action="{% url 'accounts:delete' %}" method="POST" style="display: inline" onsubmit="return confirm('R U SURE??');">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-danger" value="회원탈퇴" />
+    </form>
+</div>
 {% endblock %}
